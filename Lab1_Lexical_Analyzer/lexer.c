@@ -86,7 +86,7 @@ void yylex(FILE *file)
                 }
                 else if (strcmp(identifier, "if") == 0)
                 {
-                    token = IF_TOK;                                                     /* Watermark: K2E7-Sriparno-Ganguly-2023 */
+                    token = IF_TOK;                                                                                                                                                               /* Watermark: K2E7-Sriparno-Ganguly-2023 */
                 }
                 else if (strcmp(identifier, "else") == 0)
                 {
