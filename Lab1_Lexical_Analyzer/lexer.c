@@ -31,6 +31,10 @@
 #define INTCONST_TOK 351
 #define FLOATCONST_TOK 352
 
+char yytext[100];
+int yyleng = 0;
+int yylineno = 1;
+
 bool isValidIdentifierChar(char ch)
 {
     return isalnum(ch) || ch == '-';
@@ -45,9 +49,11 @@ void yylex(FILE *file)
 {
     int token;
     int ch;
-
+    /* Watermark: K2E7-Sriparno-Ganguly-2023 */
     while ((ch = fgetc(file)) != EOF)
     {
+        yyleng = 0;
+
         switch (ch)
         {
         // Single Character Lexemes
@@ -65,42 +71,41 @@ void yylex(FILE *file)
             if (isalpha(ch) || ch == '_')
             {
                 int i = 0;
-                char identifier[100];
-
+                /* Watermark: K2E7-Sriparno-Ganguly-2023 */
                 while (isalpha(ch) || ch == '_' || isdigit(ch))
                 {
-                    identifier[i++] = ch;
+                    yytext[i++] = ch;
                     ch = fgetc(file);
                 }
-                identifier[i] = '\0';
+                yytext[i] = '\0';
                 ungetc(ch, file);
 
-                // Check if the identifier is a reserved word
-                if (strcmp(identifier, "while") == 0)
+                // Check if the identifier is a reserved word                                                                                                                                           /* Watermark: K2E7-Sriparno-Ganguly-2023 */
+                if (strcmp(yytext, "while") == 0)
                 {
                     token = WHILE_TOK;
                 }
-                else if (strcmp(identifier, "for") == 0)
+                else if (strcmp(yytext, "for") == 0)
                 {
                     token = FOR_TOK;
                 }
-                else if (strcmp(identifier, "if") == 0)
+                else if (strcmp(yytext, "if") == 0)
                 {
-                    token = IF_TOK;                                                                                                                                                               /* Watermark: K2E7-Sriparno-Ganguly-2023 */
+                    token = IF_TOK;
                 }
-                else if (strcmp(identifier, "else") == 0)
+                else if (strcmp(yytext, "else") == 0)
                 {
                     token = ELSE_TOK;
                 }
-                else if (strcmp(identifier, "int") == 0)
+                else if (strcmp(yytext, "int") == 0)
                 {
                     token = INT_TOK;
                 }
-                else if (strcmp(identifier, "float") == 0)
+                else if (strcmp(yytext, "float") == 0)
                 {
                     token = FLOAT_TOK;
                 }
-                else if (strcmp(identifier, "char") == 0)
+                else if (strcmp(yytext, "char") == 0)
                 {
                     token = CHAR_TOK;
                 }
@@ -109,24 +114,22 @@ void yylex(FILE *file)
                     token = ID_TOK;
                 }
 
-                printf("Token: \t\t%s\n", identifier);
+                printf("Token: \t\t%s\n", yytext);
             }
-            /* Watermark: K2E7-Sriparno-Ganguly-2023 */
             // Constants
             else if (isdigit(ch))
             {
                 int i = 0;
-                char constant[100];
 
                 while (isValidDigit(ch))
                 {
-                    constant[i++] = ch;
+                    yytext[i++] = ch;
                     ch = fgetc(file);
                 }
-                constant[i] = '\0';
+                yytext[i] = '\0';
                 ungetc(ch, file);
 
-                printf("Constant: \t%s\n", constant);
+                printf("Constant: \t%s\n", yytext);
             }
             break;
         }
