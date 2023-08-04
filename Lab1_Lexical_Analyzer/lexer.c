@@ -129,7 +129,14 @@ void yylex(FILE *file)
                     token = ID_TOK;
                 }
 
-                printf("Token: \t\t%s\n", yytext);
+                if (token == ID_TOK)
+                {
+                    printf("Identifier: \t%s\n", yytext);
+                }
+                else
+                {
+                    printf("Reserved Word: \t%s\n", yytext);
+                }
             }
 
             else if (isdigit(ch) || ch == '"')
@@ -155,7 +162,7 @@ void yylex(FILE *file)
                     yytext[i] = '\0';
                     printf("String Literal: %s\n", yytext);
                 }
-                
+
                 else
                 {
                     int i = 0;
