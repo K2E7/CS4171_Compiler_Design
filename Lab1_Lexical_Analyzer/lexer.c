@@ -13,7 +13,7 @@
 #define LPAREN_TOK '('
 #define GT_TOK '>'
 #define RPAREN_TOK ')'
-#define EQ_TOK '='
+#define ASSIGN_TOK '='
 #define MINUS_TOK '-'
 #define SEMICOLON_TOK ';'
 
@@ -37,7 +37,7 @@ int yylineno = 1;
 
 bool isValidIdentifierChar(char ch)
 {
-    return isalnum(ch) || ch == '-';
+    return isalnum(ch) || ch == '_';
 }
 
 bool isValidDigit(char ch)
@@ -54,13 +54,29 @@ void yylex(FILE *file)
     {
         yyleng = 0;
 
+        // Ignore Preprocessor Directives
+        if (ch == '#')
+        {
+            while ((ch = fgetc(file)) != '\n')
+            {
+                if (ch == EOF)
+                    break;
+            }
+            if (ch == EOF)
+                break;
+
+            yylineno++;
+            continue;
+        }
+
+
         switch (ch)
         {
         // Single Character Lexemes
         case LPAREN_TOK:
         case GT_TOK:
         case RPAREN_TOK:
-        case EQ_TOK:
+        case ASSIGN_TOK:
         case MINUS_TOK:
         case SEMICOLON_TOK:
             printf("Operator: \t%c\n", ch);
