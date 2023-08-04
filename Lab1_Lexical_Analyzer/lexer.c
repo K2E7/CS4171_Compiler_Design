@@ -69,7 +69,6 @@ void yylex(FILE *file)
             continue;
         }
 
-
         switch (ch)
         {
         // Single Character Lexemes
@@ -132,34 +131,61 @@ void yylex(FILE *file)
 
                 printf("Token: \t\t%s\n", yytext);
             }
-            // Constants
-            else if (isdigit(ch))
-            {
-                int i = 0;
 
-                while (isValidDigit(ch))
+            else if (isdigit(ch) || ch == '"')
+            {
+                if (ch == '"')
                 {
+                    int i = 0;
                     yytext[i++] = ch;
                     ch = fgetc(file);
-                }
-                yytext[i] = '\0';
-                ungetc(ch, file);
 
-                printf("Constant: \t%s\n", yytext);
+                    // Read characters until the closing double quote is found
+                    while (ch != '"' && ch != EOF && i < 99)
+                    {
+                        yytext[i++] = ch;
+                        ch = fgetc(file);
+                    }
+
+                    if (ch == '"')
+                    {
+                        yytext[i++] = ch;
+                    }
+
+                    yytext[i] = '\0';
+                    printf("String Literal: %s\n", yytext);
+                }
+                
+                else
+                {
+                    int i = 0;
+
+                    while (isValidDigit(ch))
+                    {
+                        yytext[i++] = ch;
+                        ch = fgetc(file);
+                    }
+                    yytext[i] = '\0';
+                    ungetc(ch, file);
+
+                    printf("Constant: \t%s\n", yytext);
+                }
             }
-            break;
         }
     }
 }
 
-int main(int argc, char* argv[]) {
-    if (argc != 2) {
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
         printf("Usage: %s <input_file>\n", argv[0]);
         return 1;
     }
 
-    FILE* file = fopen(argv[1], "r");
-    if (file == NULL) {
+    FILE *file = fopen(argv[1], "r");
+    if (file == NULL)
+    {
         perror("Error opening file");
         return 1;
     }
