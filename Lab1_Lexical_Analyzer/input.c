@@ -1,13 +1,17 @@
 #include <stdio.h>
 
-// Hello Hello 
-/* Can You Hear Me 
-   As I say your Name*/
-int main() {
+// Hello Hello
+
+int main()
+{
     int x = 10;
     float y = 3.14;
-    if (x > 0) {
-        while (y >= 1) {
+    if (x > 0)
+    {
+        /* Can You Hear Me
+   As I say your Name*/
+        while (y >= 1)
+        {
             printf("Hello, world!\n");
             y = y - 1;
         }
