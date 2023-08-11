@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+// Hello Hello 
+/* Can You Hear Me 
+   As I say your Name*/
 int main() {
     int x = 10;
     float y = 3.14;

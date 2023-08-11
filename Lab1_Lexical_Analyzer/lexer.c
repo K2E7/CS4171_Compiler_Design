@@ -49,6 +49,7 @@ void yylex(FILE *file)
 {
     int token;
     int ch;
+    bool in_comment = false;
     /* Watermark: K2E7-Sriparno-Ganguly-2023 */
     while ((ch = fgetc(file)) != EOF)
     {
@@ -67,6 +68,52 @@ void yylex(FILE *file)
 
             yylineno++;
             continue;
+        }
+        // Handle Single-Line Comments
+        else if (ch == '/')
+        {
+            ch = fgetc(file);
+            if (ch == '/')
+            {
+                while ((ch = fgetc(file)) != '\n')
+                {
+                    if (ch == EOF)
+                        break;
+                }
+                if (ch == EOF)
+                    break;
+
+                yylineno++;
+                continue;
+            }
+            else if (ch == '*') // Handle Multi-Line Comments
+            {
+                in_comment = true;
+                continue;
+            }
+            else
+            {
+                ungetc(ch, file);
+            }
+        }
+
+        // Handle Multi-Line Comments
+        if (in_comment)
+        {
+            while ((ch = fgetc(file)) != EOF)
+            {
+                if (ch == '*')
+                {
+                    ch = fgetc(file);
+                    if (ch == '/')
+                    {
+                        in_comment = false;
+                        break;
+                    }
+                }
+            }
+            if (ch == EOF)
+                break;
         }
 
         switch (ch)
