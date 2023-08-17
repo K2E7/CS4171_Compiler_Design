@@ -15,7 +15,7 @@ Follow these steps to compile and run the custom C-based lexical analyzer:
    Compile the C file using a C compiler like `gcc`. Open your terminal and navigate to the directory containing the `lexical_analyzer.c` file, then execute the following command:
 
    ```bash
-   gcc -o lexer lexical_analyzer.c
+   gcc lexical_analyzer.c -o lexer
    ```
 
    This will create an executable named `lexer`.
