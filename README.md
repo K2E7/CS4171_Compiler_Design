@@ -11,6 +11,8 @@ CS4171 Compiler Design is a fascinating laboratory course that complements the C
 The repository is organized into different directories, each corresponding to a specific lab or project. This structure allows me to easily navigate and locate the relevant code for each component of the compiler. Here's a brief overview of the main directories:
 
 1. **Lab1_Lexical_Analyzer**: Contains the code for the first lab, where I implemented a lexical analyzer to tokenize the input source code.
+2. **Lab2_Lexical_Analyzer**: Contains the code for the second lab, where I implemented a lexical analyzer to tokenize the input source code, but this time I did it using the lexer tool.
+
 
 
 
