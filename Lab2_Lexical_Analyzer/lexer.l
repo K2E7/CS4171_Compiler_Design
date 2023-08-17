@@ -1,14 +1,13 @@
 %{
 #include <stdio.h>                                                                                                          
-#include <stdlib.h>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 // /* Watermark: K2E7-Sriparno-Ganguly-2023 */
-                if (strcmp(yytext, "while") == 0)
+#include <stdlib.h>  
+int comment_flag = 0; // Flag to track multi-line comments                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               // /* Watermark: K2E7-Sriparno-Ganguly-2023 */
 %}
 
 DIGIT [0-9]
 LETTER [a-zA-Z]
 ID {LETTER}({LETTER}|{DIGIT})*
 INT_CONST {DIGIT}+
-WS [ \t\t\n]+
 
 %%
 
@@ -20,7 +19,7 @@ WS [ \t\t\n]+
 "while"     { printf("Reserved Word: \t\twhile\n"); }
 "if"        { printf("Reserved Word: \t\tif\n"); }
 "else"      { printf("Reserved Word: \t\telse\n"); }
-                                                                                                                                                                                                    // /* Watermark: K2E7-Sriparno-Ganguly-2023 */
+                                                                                                                                                                                                    
 "+"         { printf("Operator: \t\t+\n"); }
 "-"         { printf("Operator: \t\t-\n"); }
 "*"         { printf("Operator: \t\t*\n"); }
@@ -39,6 +38,7 @@ WS [ \t\t\n]+
 "!"         { printf("Operator: \t\t!\n"); }
 "^"         { printf("Operator: \t\t^\n"); }
 "="         { printf("Operator: \t\t=\n"); }
+";"         { printf("Semicolon: \t\t;\n"); }
 
 "("         { printf("Parenthesis: \t\t(\n"); }
 ")"         { printf("Parenthesis: \t\t)\n"); }
@@ -47,7 +47,16 @@ WS [ \t\t\n]+
 
 {ID}        { printf("Identifier: \t\t%s\n", yytext); }
 {INT_CONST} { printf("Integer Constant: \t%s\n", yytext); }
-{WS}        ; // Ignore whitespace
+
+\"[^\"\n]*\" { printf("String Literal: \t%s\n", yytext); }
+
+"#".*                ; 
+[ \t]+               ; 
+"//".*               ; 
+
+"/*"        { comment_flag = 1; } 
+"*/"        { comment_flag = 0; } 
+"/*"([^*]|\*[^/])*"*/" { } 
 
 .           { printf("Unknown token: \t\t%s\n", yytext); }
 
