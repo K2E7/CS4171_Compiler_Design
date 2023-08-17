@@ -62,8 +62,3 @@ You can customize the Lex/Flex file (`lex_file_name.l`) to add new token pattern
 ## Cleaning Up
 
 To remove the generated files after usage, simply delete the `lex.yy.c` file and the `lexer` executable.
-
-## Author
-
-Sriparno Ganguly
-
