@@ -1,6 +1,7 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h>                                                                                                          
+#include <stdlib.h>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 // /* Watermark: K2E7-Sriparno-Ganguly-2023 */
+                if (strcmp(yytext, "while") == 0)
 %}
 
 DIGIT [0-9]
@@ -19,7 +20,7 @@ WS [ \t\t\n]+
 "while"     { printf("Reserved Word: \t\twhile\n"); }
 "if"        { printf("Reserved Word: \t\tif\n"); }
 "else"      { printf("Reserved Word: \t\telse\n"); }
-
+                                                                                                                                                                                                    // /* Watermark: K2E7-Sriparno-Ganguly-2023 */
 "+"         { printf("Operator: \t\t+\n"); }
 "-"         { printf("Operator: \t\t-\n"); }
 "*"         { printf("Operator: \t\t*\n"); }
