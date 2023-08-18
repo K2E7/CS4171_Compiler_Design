@@ -351,8 +351,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 42
-#define YY_END_OF_BUFFER 43
+#define YY_NUM_RULES 43
+#define YY_END_OF_BUFFER 44
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -362,7 +362,7 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[74] =
     {   0,
-        0,    0,   43,   41,   36,   42,   24,   41,   35,   13,
+        0,    0,   44,   41,   36,   42,   24,   41,   35,   13,
        22,   28,   29,   11,    9,   10,   12,   33,   27,   16,
        26,   17,   32,   25,   32,   32,   32,   32,   32,   32,
        30,   23,   31,   36,   15,    0,   34,   35,   20,   39,
@@ -488,11 +488,48 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "lexer.l"
 #line 2 "lexer.l"
-#include <stdio.h>                                                                                                          
-#include <stdlib.h>  
+#define RESERVED_INT 1001
+#define RESERVED_FLOAT 1002
+#define RESERVED_CHAR 1003
+#define RESERVED_FOR 1004
+#define RESERVED_DO 1005
+#define RESERVED_WHILE 1006
+#define RESERVED_IF 1007
+#define RESERVED_ELSE 1008
+
+#define OPERATOR_PLUS 2001
+#define OPERATOR_MINUS 2002
+#define OPERATOR_MULTIPLY 2003
+#define OPERATOR_DIVIDE 2004
+#define OPERATOR_MODULO 2005
+#define OPERATOR_EQUAL 2006
+#define OPERATOR_NOT_EQUAL 2007
+#define OPERATOR_LESS_THAN 2008
+#define OPERATOR_GREATER_THAN 2009
+#define OPERATOR_LESS_EQUAL 2010
+#define OPERATOR_GREATER_EQUAL 2011
+#define OPERATOR_LOGICAL_AND 2012
+#define OPERATOR_LOGICAL_OR 2013
+#define OPERATOR_BITWISE_AND 2014
+#define OPERATOR_BITWISE_OR 2015
+#define OPERATOR_NOT 2016
+#define OPERATOR_BITWISE_XOR 2017
+#define OPERATOR_ASSIGN 2018
+#define SEMICOLON 2019
+
+#define PARENTHESIS_OPEN 3001
+#define PARENTHESIS_CLOSE 3002
+#define CURLY_BRACE_OPEN 3003
+#define CURLY_BRACE_CLOSE 3004
+
+#define IDENTIFIER 4001
+#define INT_CONSTANT 4002
+
+#define STRING_LITERAL 5001
+
 int comment_flag = 0; // Flag to track multi-line comments                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               // /* Watermark: K2E7-Sriparno-Ganguly-2023 */
-#line 496 "lex.yy.c"
-#line 497 "lex.yy.c"
+#line 533 "lex.yy.c"
+#line 534 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -709,10 +746,10 @@ YY_DECL
 		}
 
 	{
-#line 12 "lexer.l"
+#line 49 "lexer.l"
 
 
-#line 717 "lex.yy.c"
+#line 754 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -771,216 +808,222 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "lexer.l"
-{ printf("Reserved Word: \t\tint\n"); }
+#line 51 "lexer.l"
+{ printf("Line %d: Reserved Word: \t\tint \t\t(ID: %d)\n", yylineno, RESERVED_INT); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 15 "lexer.l"
-{ printf("Reserved Word: \t\tfloat\n"); }
+#line 52 "lexer.l"
+{ printf("Line %d: Reserved Word: \t\tfloat \t\t(ID: %d)\n", yylineno, RESERVED_FLOAT); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 16 "lexer.l"
-{ printf("Reserved Word: \t\tchar\n"); }
+#line 53 "lexer.l"
+{ printf("Line %d: Reserved Word: \t\tchar \t\t(ID: %d)\n", yylineno, RESERVED_CHAR); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "lexer.l"
-{ printf("Reserved Word: \t\tfor\n"); }
+#line 54 "lexer.l"
+{ printf("Line %d: Reserved Word: \t\tfor \t\t(ID: %d)\n", yylineno, RESERVED_FOR); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 18 "lexer.l"
-{ printf("Reserved Word: \t\tdo\n"); }
+#line 55 "lexer.l"
+{ printf("Line %d: Reserved Word: \t\tdo \t\t(ID: %d)\n", yylineno, RESERVED_DO); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 19 "lexer.l"
-{ printf("Reserved Word: \t\twhile\n"); }
+#line 56 "lexer.l"
+{ printf("Line %d: Reserved Word: \t\twhile \t\t(ID: %d)\n", yylineno, RESERVED_WHILE); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 20 "lexer.l"
-{ printf("Reserved Word: \t\tif\n"); }
+#line 57 "lexer.l"
+{ printf("Line %d: Reserved Word: \t\tif \t\t(ID: %d)\n", yylineno, RESERVED_IF); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "lexer.l"
-{ printf("Reserved Word: \t\telse\n"); }
+#line 58 "lexer.l"
+{ printf("Line %d: Reserved Word: \t\telse \t\t(ID: %d)\n", yylineno, RESERVED_ELSE); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 23 "lexer.l"
-{ printf("Operator: \t\t+\n"); }
+#line 60 "lexer.l"
+{ printf("Line %d: Operator: \t\t+ \t\t(ID: %d)\n", yylineno, OPERATOR_PLUS); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 24 "lexer.l"
-{ printf("Operator: \t\t-\n"); }
+#line 61 "lexer.l"
+{ printf("Line %d: Operator: \t\t- \t\t(ID: %d)\n", yylineno, OPERATOR_MINUS); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 25 "lexer.l"
-{ printf("Operator: \t\t*\n"); }
+#line 62 "lexer.l"
+{ printf("Line %d: Operator: \t\t* \t\t(ID: %d)\n", yylineno, OPERATOR_MULTIPLY); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 26 "lexer.l"
-{ printf("Operator: \t\t/\n"); }
+#line 63 "lexer.l"
+{ printf("Line %d: Operator: \t\t/ \t\t(ID: %d)\n", yylineno, OPERATOR_DIVIDE); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 27 "lexer.l"
-{ printf("Operator: \t\t%%\n"); }
+#line 64 "lexer.l"
+{ printf("Line %d: Operator: \t\t%% \t\t(ID: %d)\n", yylineno, OPERATOR_MODULO); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 28 "lexer.l"
-{ printf("Operator: \t\t==\n"); }
+#line 65 "lexer.l"
+{ printf("Line %d: Operator: \t\t== \t\t(ID: %d)\n", yylineno, OPERATOR_EQUAL); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 29 "lexer.l"
-{ printf("Operator: \t\t!=\n"); }
+#line 66 "lexer.l"
+{ printf("Line %d: Operator: \t\t!= \t\t(ID: %d)\n", yylineno, OPERATOR_NOT_EQUAL); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 30 "lexer.l"
-{ printf("Operator: \t\t<\n"); }
+#line 67 "lexer.l"
+{ printf("Line %d: Operator: \t\t< \t\t(ID: %d)\n", yylineno, OPERATOR_LESS_THAN); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 31 "lexer.l"
-{ printf("Operator: \t\t>\n"); }
+#line 68 "lexer.l"
+{ printf("Line %d: Operator: \t\t> \t\t(ID: %d)\n", yylineno, OPERATOR_GREATER_THAN); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 32 "lexer.l"
-{ printf("Operator: \t\t<=\n"); }
+#line 69 "lexer.l"
+{ printf("Line %d: Operator: \t\t<= \t\t(ID: %d)\n", yylineno, OPERATOR_LESS_EQUAL); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 33 "lexer.l"
-{ printf("Operator: \t\t>=\n"); }
+#line 70 "lexer.l"
+{ printf("Line %d: Operator: \t\t>= \t\t(ID: %d)\n", yylineno, OPERATOR_GREATER_EQUAL); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 34 "lexer.l"
-{ printf("Operator: \t\t&&\n"); }
+#line 71 "lexer.l"
+{ printf("Line %d: Operator: \t\t&& \t\t(ID: %d)\n", yylineno, OPERATOR_LOGICAL_AND); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 35 "lexer.l"
-{ printf("Operator: \t\t||\n"); }
+#line 72 "lexer.l"
+{ printf("Line %d: Operator: \t\t|| \t\t(ID: %d)\n", yylineno, OPERATOR_LOGICAL_OR); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 36 "lexer.l"
-{ printf("Operator: \t\t&\n"); }
+#line 73 "lexer.l"
+{ printf("Line %d: Operator: \t\t& \t\t(ID: %d)\n", yylineno, OPERATOR_BITWISE_AND); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 37 "lexer.l"
-{ printf("Operator: \t\t|\n"); }
+#line 74 "lexer.l"
+{ printf("Line %d: Operator: \t\t| \t\t(ID: %d)\n", yylineno, OPERATOR_BITWISE_OR); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 38 "lexer.l"
-{ printf("Operator: \t\t!\n"); }
+#line 75 "lexer.l"
+{ printf("Line %d: Operator: \t\t! \t\t(ID: %d)\n", yylineno, OPERATOR_NOT); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 39 "lexer.l"
-{ printf("Operator: \t\t^\n"); }
+#line 76 "lexer.l"
+{ printf("Line %d: Operator: \t\t^ \t\t(ID: %d)\n", yylineno, OPERATOR_BITWISE_XOR); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 40 "lexer.l"
-{ printf("Operator: \t\t=\n"); }
+#line 77 "lexer.l"
+{ printf("Line %d: Operator: \t\t= \t\t(ID: %d)\n", yylineno, OPERATOR_ASSIGN); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 41 "lexer.l"
-{ printf("Semicolon: \t\t;\n"); }
+#line 78 "lexer.l"
+{ printf("Line %d: Semicolon: \t\t; \t\t(ID: %d)\n", yylineno, SEMICOLON); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 43 "lexer.l"
-{ printf("Parenthesis: \t\t(\n"); }
+#line 80 "lexer.l"
+{ printf("Line %d: Parenthesis: \t\t( \t\t(ID: %d)\n", yylineno, PARENTHESIS_OPEN); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 44 "lexer.l"
-{ printf("Parenthesis: \t\t)\n"); }
+#line 81 "lexer.l"
+{ printf("Line %d: Parenthesis: \t\t) \t\t(ID: %d)\n", yylineno, PARENTHESIS_CLOSE); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 45 "lexer.l"
-{ printf("Curly Brace: \t\t{\n"); }
+#line 82 "lexer.l"
+{ printf("Line %d: Curly Brace: \t\t{ \t\t(ID: %d)\n", yylineno, CURLY_BRACE_OPEN); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 46 "lexer.l"
-{ printf("Curly Brace: \t\t}\n"); }
+#line 83 "lexer.l"
+{ printf("Line %d: Curly Brace: \t\t} \t\t(ID: %d)\n", yylineno, CURLY_BRACE_CLOSE); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 48 "lexer.l"
-{ printf("Identifier: \t\t%s\n", yytext); }
+#line 85 "lexer.l"
+{ printf("Line %d: Identifier: \t\t%s \t\t(ID: %d)\n", yylineno, yytext, IDENTIFIER); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 49 "lexer.l"
-{ printf("Integer Constant: \t%s\n", yytext); }
+#line 86 "lexer.l"
+{ printf("Line %d: Integer Constant: \t%s \t(ID: %d)\n", yylineno, yytext, INT_CONSTANT); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 51 "lexer.l"
-{ printf("String Literal: \t%s\n", yytext); }
+#line 88 "lexer.l"
+{ printf("Line %d: String Literal: \t%s \t(ID: %d)\n", yylineno, yytext, STRING_LITERAL); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 53 "lexer.l"
+#line 90 "lexer.l"
 ; 
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 54 "lexer.l"
+#line 91 "lexer.l"
 ; 
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 55 "lexer.l"
+#line 92 "lexer.l"
 ; 
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 57 "lexer.l"
+#line 94 "lexer.l"
 { comment_flag = 1; } 
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 58 "lexer.l"
+#line 95 "lexer.l"
 { comment_flag = 0; } 
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 59 "lexer.l"
+#line 96 "lexer.l"
 { } 
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 61 "lexer.l"
-{ printf("Unknown token: \t\t%s\n", yytext); }
+#line 98 "lexer.l"
+{ printf("Line %d: Unknown token: \t\t%s\n", yylineno, yytext); }
 	YY_BREAK
 case 42:
+/* rule 42 can match eol */
 YY_RULE_SETUP
-#line 63 "lexer.l"
+#line 100 "lexer.l"
+{ yylineno++; }
+	YY_BREAK
+case 43:
+YY_RULE_SETUP
+#line 102 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 985 "lex.yy.c"
+#line 1028 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1985,7 +2028,8 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 63 "lexer.l"
+#line 102 "lexer.l"
+
 
 
 int main(int argc, char *argv[]) {
