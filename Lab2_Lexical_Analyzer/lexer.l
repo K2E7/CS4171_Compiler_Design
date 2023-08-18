@@ -84,6 +84,7 @@ INT_CONST {DIGIT}+
 
 {ID}        { printf("Line %d: Identifier: \t\t%s \t\t(ID: %d)\n", yylineno, yytext, IDENTIFIER); }
 {INT_CONST} { printf("Line %d: Integer Constant: \t%s \t(ID: %d)\n", yylineno, yytext, INT_CONSTANT); }
+{DIGIT}+{LETTER}({LETTER}|{DIGIT})*   { printf("Line %d: Lexical Error - Invalid Identifier: %s\n", yylineno, yytext); }
 
 \"[^\"\n]*\" { printf("Line %d: String Literal: \t%s \t(ID: %d)\n", yylineno, yytext, STRING_LITERAL); }
 
