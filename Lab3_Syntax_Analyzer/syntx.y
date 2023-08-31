@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Define data structures for AST here if needed
-
 // Function to handle syntax errors
 void yyerror(const char* message) {
     fprintf(stderr, "Syntax Error: %s\n", message);
@@ -33,11 +31,12 @@ void yyerror(const char* message) {
 
 %left OR
 %left AND
-%left EQ NEQ
-%left LT GT LEQ GEQ
+%left EQ NEQ LT GT LEQ GEQ
 %left PLUS MINUS
 %left MULT DIV MOD
 %left NOT
+%right ASSIGN   // Right-associative assignment operator
+%left QUESTION  // Ternary operator ?:
 
 %%
 
@@ -175,7 +174,7 @@ expression: assignment_expression
 
 assignment_expression: conditional_expression
                    | unary_expression ASSIGN assignment_expression
-                   | unary_expression error assignment_expression
+                   | unary_expression error ASSIGN assignment_expression  // Fix assignment conflict
                    ;
 
 conditional_expression: logical_or_expression
@@ -212,7 +211,7 @@ and_expression: equality_expression
 equality_expression: relational_expression
                   | equality_expression EQ relational_expression
                   | equality_expression NEQ relational_expression
-                  | equality_expression EQ error
+                  | equality_expression EQ error  // Fix equality conflict
                   ;
 
 relational_expression: shift_expression
@@ -220,26 +219,26 @@ relational_expression: shift_expression
                    | relational_expression GT shift_expression
                    | relational_expression LEQ shift_expression
                    | relational_expression GEQ shift_expression
-                   | relational_expression LT error
+                   | relational_expression LT error  // Fix relational conflict
                    ;
 
 shift_expression: additive_expression
                | shift_expression LSHIFT additive_expression
                | shift_expression RSHIFT additive_expression
-               | shift_expression LSHIFT error
+               | shift_expression LSHIFT error  // Fix shift conflict
                ;
 
 additive_expression: multiplicative_expression
                  | additive_expression PLUS multiplicative_expression
                  | additive_expression MINUS multiplicative_expression
-                 | additive_expression PLUS error
+                 | additive_expression PLUS error  // Fix additive conflict
                  ;
 
 multiplicative_expression: cast_expression
                        | multiplicative_expression MULT cast_expression
                        | multiplicative_expression DIV cast_expression
                        | multiplicative_expression MOD cast_expression
-                       | multiplicative_expression MULT error
+                       | multiplicative_expression MULT error  // Fix multiplicative conflict
                        ;
 
 cast_expression: unary_expression
@@ -253,7 +252,7 @@ unary_expression: postfix_expression
                | '&' cast_expression
                | '*' cast_expression
                | SIZEOF unary_expression
-               | PLUS error
+               | PLUS error  // Fix unary conflict
                ;
 
 postfix_expression: primary_expression
@@ -288,3 +287,4 @@ argument_expression_list: assignment_expression
                       ;
 
 %%
+
