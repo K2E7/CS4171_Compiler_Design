@@ -13,6 +13,7 @@ delimiter   [ \t]
 
     #include "y.tab.h"
 
+    int in_comment = 0;
     int yylineno;
 %}
 
@@ -61,13 +62,6 @@ int             return (INT_TOK);
 float           return (FLOAT_TOK);
 char            return (CHAR_TOK);
 return          return (RETURN_TOK);
-"//".*      
-
-"/*"        { in_comment = 1; }
-<IN_COMMENT>{
-    "*/"    { in_comment = 0; }
-    .       
-}
 
 {identifier}    return (ID_TOK);
 {intconst}      return (INTCONST);

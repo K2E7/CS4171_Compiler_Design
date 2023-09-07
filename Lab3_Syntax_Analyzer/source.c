@@ -1,7 +1,5 @@
 int myconst = 100;
 
-// Hello world.
-
 int helloWorld() {
     printf("helo world");
     return 0;
