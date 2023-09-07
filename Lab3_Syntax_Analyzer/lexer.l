@@ -61,6 +61,14 @@ int             return (INT_TOK);
 float           return (FLOAT_TOK);
 char            return (CHAR_TOK);
 return          return (RETURN_TOK);
+"//".*      
+
+"/*"        { in_comment = 1; }
+<IN_COMMENT>{
+    "*/"    { in_comment = 0; }
+    .       
+}
+
 {identifier}    return (ID_TOK);
 {intconst}      return (INTCONST);
 {floatconst}    return (FLOATCONST);
