@@ -85,6 +85,7 @@ void yyerror(const char *s) {
     fprintf(stderr, "Error: %s\n", s);
 }
 
+/*
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <input_file>\n", argv[0]);
@@ -103,3 +104,4 @@ int main(int argc, char *argv[]) {
     fclose(input_file);
     return 0;
 }
+*/
