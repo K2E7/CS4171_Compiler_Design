@@ -199,9 +199,9 @@ void yyerror(char *s) {
 
 int main() {
     if (yyparse() == 0) {
-        printf("\nParsing Completed Successfully ✅\n");
+        printf("\nParsing Completed Successfully ✓\n");
     } else {
-        printf("\nParsing Error (at line no: %d) ❌\n", yylineno);
+        printf("\nParsing Error (at line no: %d) ✗\n", yylineno);
     }
 
     return 0;
