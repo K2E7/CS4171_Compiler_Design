@@ -102,7 +102,7 @@ INT_CONST {DIGIT}+
 
 %%
 
-
+/*
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         fprintf(stderr, "Usage: \t\t%s <input_file>\n", argv[0]);
@@ -121,3 +121,4 @@ int main(int argc, char *argv[]) {
     fclose(input_file);
     return 0;
 }
+*/

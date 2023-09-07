@@ -54,51 +54,42 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    ID = 258,                      /* ID  */
-    INT = 259,                     /* INT  */
-    FLOAT = 260,                   /* FLOAT  */
-    CHAR = 261,                    /* CHAR  */
-    STRING = 262,                  /* STRING  */
-    MAIN = 263,                    /* MAIN  */
-    IF = 264,                      /* IF  */
-    ELSE = 265,                    /* ELSE  */
-    WHILE = 266,                   /* WHILE  */
-    FOR = 267,                     /* FOR  */
-    RETURN = 268,                  /* RETURN  */
-    VOID = 269,                    /* VOID  */
-    PLUS = 270,                    /* PLUS  */
-    MINUS = 271,                   /* MINUS  */
-    MULT = 272,                    /* MULT  */
-    DIV = 273,                     /* DIV  */
-    MOD = 274,                     /* MOD  */
-    EQ = 275,                      /* EQ  */
-    NEQ = 276,                     /* NEQ  */
-    LT = 277,                      /* LT  */
-    GT = 278,                      /* GT  */
-    LEQ = 279,                     /* LEQ  */
-    GEQ = 280,                     /* GEQ  */
-    AND = 281,                     /* AND  */
-    OR = 282,                      /* OR  */
-    NOT = 283,                     /* NOT  */
-    SEMICOLON = 284,               /* SEMICOLON  */
-    COMMA = 285,                   /* COMMA  */
-    COLON = 286,                   /* COLON  */
-    LPAREN = 287,                  /* LPAREN  */
-    RPAREN = 288,                  /* RPAREN  */
-    LBRACE = 289,                  /* LBRACE  */
-    RBRACE = 290,                  /* RBRACE  */
-    LBRACKET = 291,                /* LBRACKET  */
-    RBRACKET = 292,                /* RBRACKET  */
-    ASSIGN = 293,                  /* ASSIGN  */
-    QUESTION = 294,                /* QUESTION  */
-    LSHIFT = 295,                  /* LSHIFT  */
-    RSHIFT = 296,                  /* RSHIFT  */
-    SIZEOF = 297,                  /* SIZEOF  */
-    DOT = 298,                     /* DOT  */
-    ARROW = 299,                   /* ARROW  */
-    INC = 300,                     /* INC  */
-    DEC = 301,                     /* DEC  */
-    ERROR = 302                    /* ERROR  */
+    RESERVED_INT = 258,            /* RESERVED_INT  */
+    RESERVED_FLOAT = 259,          /* RESERVED_FLOAT  */
+    RESERVED_CHAR = 260,           /* RESERVED_CHAR  */
+    RESERVED_FOR = 261,            /* RESERVED_FOR  */
+    RESERVED_DO = 262,             /* RESERVED_DO  */
+    RESERVED_WHILE = 263,          /* RESERVED_WHILE  */
+    RESERVED_IF = 264,             /* RESERVED_IF  */
+    RESERVED_ELSE = 265,           /* RESERVED_ELSE  */
+    RESERVED_MAIN = 266,           /* RESERVED_MAIN  */
+    OPERATOR_PLUS = 267,           /* OPERATOR_PLUS  */
+    OPERATOR_MINUS = 268,          /* OPERATOR_MINUS  */
+    OPERATOR_MULTIPLY = 269,       /* OPERATOR_MULTIPLY  */
+    OPERATOR_DIVIDE = 270,         /* OPERATOR_DIVIDE  */
+    OPERATOR_MODULO = 271,         /* OPERATOR_MODULO  */
+    OPERATOR_EQUAL = 272,          /* OPERATOR_EQUAL  */
+    OPERATOR_NOT_EQUAL = 273,      /* OPERATOR_NOT_EQUAL  */
+    OPERATOR_LESS_THAN = 274,      /* OPERATOR_LESS_THAN  */
+    OPERATOR_GREATER_THAN = 275,   /* OPERATOR_GREATER_THAN  */
+    OPERATOR_LESS_EQUAL = 276,     /* OPERATOR_LESS_EQUAL  */
+    OPERATOR_GREATER_EQUAL = 277,  /* OPERATOR_GREATER_EQUAL  */
+    OPERATOR_LOGICAL_AND = 278,    /* OPERATOR_LOGICAL_AND  */
+    OPERATOR_LOGICAL_OR = 279,     /* OPERATOR_LOGICAL_OR  */
+    OPERATOR_BITWISE_AND = 280,    /* OPERATOR_BITWISE_AND  */
+    OPERATOR_BITWISE_OR = 281,     /* OPERATOR_BITWISE_OR  */
+    OPERATOR_NOT = 282,            /* OPERATOR_NOT  */
+    OPERATOR_BITWISE_XOR = 283,    /* OPERATOR_BITWISE_XOR  */
+    OPERATOR_ASSIGN = 284,         /* OPERATOR_ASSIGN  */
+    SEMICOLON = 285,               /* SEMICOLON  */
+    PARENTHESIS_OPEN = 286,        /* PARENTHESIS_OPEN  */
+    PARENTHESIS_CLOSE = 287,       /* PARENTHESIS_CLOSE  */
+    CURLY_BRACE_OPEN = 288,        /* CURLY_BRACE_OPEN  */
+    CURLY_BRACE_CLOSE = 289,       /* CURLY_BRACE_CLOSE  */
+    IDENTIFIER = 290,              /* IDENTIFIER  */
+    INT_CONSTANT = 291,            /* INT_CONSTANT  */
+    STRING_LITERAL = 292,          /* STRING_LITERAL  */
+    COMMA = 293                    /* COMMA  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -107,51 +98,42 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define ID 258
-#define INT 259
-#define FLOAT 260
-#define CHAR 261
-#define STRING 262
-#define MAIN 263
-#define IF 264
-#define ELSE 265
-#define WHILE 266
-#define FOR 267
-#define RETURN 268
-#define VOID 269
-#define PLUS 270
-#define MINUS 271
-#define MULT 272
-#define DIV 273
-#define MOD 274
-#define EQ 275
-#define NEQ 276
-#define LT 277
-#define GT 278
-#define LEQ 279
-#define GEQ 280
-#define AND 281
-#define OR 282
-#define NOT 283
-#define SEMICOLON 284
-#define COMMA 285
-#define COLON 286
-#define LPAREN 287
-#define RPAREN 288
-#define LBRACE 289
-#define RBRACE 290
-#define LBRACKET 291
-#define RBRACKET 292
-#define ASSIGN 293
-#define QUESTION 294
-#define LSHIFT 295
-#define RSHIFT 296
-#define SIZEOF 297
-#define DOT 298
-#define ARROW 299
-#define INC 300
-#define DEC 301
-#define ERROR 302
+#define RESERVED_INT 258
+#define RESERVED_FLOAT 259
+#define RESERVED_CHAR 260
+#define RESERVED_FOR 261
+#define RESERVED_DO 262
+#define RESERVED_WHILE 263
+#define RESERVED_IF 264
+#define RESERVED_ELSE 265
+#define RESERVED_MAIN 266
+#define OPERATOR_PLUS 267
+#define OPERATOR_MINUS 268
+#define OPERATOR_MULTIPLY 269
+#define OPERATOR_DIVIDE 270
+#define OPERATOR_MODULO 271
+#define OPERATOR_EQUAL 272
+#define OPERATOR_NOT_EQUAL 273
+#define OPERATOR_LESS_THAN 274
+#define OPERATOR_GREATER_THAN 275
+#define OPERATOR_LESS_EQUAL 276
+#define OPERATOR_GREATER_EQUAL 277
+#define OPERATOR_LOGICAL_AND 278
+#define OPERATOR_LOGICAL_OR 279
+#define OPERATOR_BITWISE_AND 280
+#define OPERATOR_BITWISE_OR 281
+#define OPERATOR_NOT 282
+#define OPERATOR_BITWISE_XOR 283
+#define OPERATOR_ASSIGN 284
+#define SEMICOLON 285
+#define PARENTHESIS_OPEN 286
+#define PARENTHESIS_CLOSE 287
+#define CURLY_BRACE_OPEN 288
+#define CURLY_BRACE_CLOSE 289
+#define IDENTIFIER 290
+#define INT_CONSTANT 291
+#define STRING_LITERAL 292
+#define COMMA 293
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
