@@ -86,7 +86,6 @@ void parsed(const char * msg) {
 %token LOG_OR_TOK
 
 // [ Identifier, constants ]
-%token ID_TOK
 %token INTCONST
 %token FLOATCONST
 %token CHARCONST
