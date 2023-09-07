@@ -95,6 +95,9 @@ void parsed(const char * msg) {
 %start S
 
 %%
+comment   : COMMENT
+          ;
+
 S               : S statement
                 | S main
                 | S function
