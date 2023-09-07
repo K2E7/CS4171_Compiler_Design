@@ -1,5 +1,5 @@
-#ifndef TOKENS_H
-#define TOKENS_H
+#ifndef TOKEN_H
+#define TOKEN_H
 
 #define RESERVED_INT 1001
 #define RESERVED_FLOAT 1002
