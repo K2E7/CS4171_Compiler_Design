@@ -106,8 +106,13 @@ operation       : declaration
                 | condition
                 ;
 
-declaration     : datatype id_token                      {parsed("Declaration statement");}
-                ;
+declaration     : datatype id_token                      {
+                    Symbol symbol;
+                    symbol.name = strdup(yytext);
+                    symbol.type = datatype;
+                    symbol.scope = global;
+                    add_symbol(symbol_table, &symbol);
+                };
 
 assignment      : datatype id_token EQ_TOK expression    {parsed("Assignment statement");}
                 | id_token EQ_TOK expression              {parsed("Assignment statement");}
@@ -143,8 +148,13 @@ expression      : function_call
                 | expression arithmetic_op expression
                 | expression relational_op expression
                 | expression PLUS_PLUS_TOK
-                | expression MINUS_MINUS_TOK
-                ;  
+                | expression MINUS_MINUS_TOK {
+                     Symbol *symbol = lookup_symbol(symbol_table, yytext);
+                     if (symbol == NULL) {
+                     yyerror("Identifier not found.");
+
+                    }
+                };  
 
 if_statement    : IF_TOK LPAREN_TOK condition RPAREN_TOK block                  {parsed("If statement");}
                 | IF_TOK LPAREN_TOK condition RPAREN_TOK block ELSE_TOK block   {parsed("If-else statement");}
