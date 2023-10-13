@@ -1,7 +1,45 @@
 %{
 #include "lex.yy.c"
-
+#define MAX_SYMBOLS 100
 void yyerror(char *);
+
+// Symbol Table Definitions
+typedef struct {
+    char name[50];
+    char type[20];
+    int scope;  // You can define a scope as needed
+} Symbol;
+
+Symbol symbol_table[MAX_SYMBOLS];
+int symbol_count = 0;
+char current_datatype[20];                      // Global variable for storing current datatype.
+
+void set_datatype(char* datatype) {
+    strcpy(current_datatype, datatype);
+}
+
+char* get_datatype() {
+    return current_datatype;
+}
+
+void add_symbol(Symbol table[], Symbol symbol) {
+    if (symbol_count < MAX_SYMBOLS) {
+        strcpy(symbol.type, get_datatype()); // Use the current data type
+        table[symbol_count] = symbol;
+        symbol_count++;
+    } else {
+        yyerror("Symbol table is full.");
+    }
+}
+
+Symbol* lookup_symbol(Symbol table[], char *name) {
+    for (int i = 0; i < symbol_count; i++) {
+        if (strcmp(table[i].name, name) == 0) {
+            return &table[i];
+        }
+    }
+    return NULL;
+}
 
 void parsed(const char * msg) {
     printf("[line: %d] => %s syntax is OK\n", yylineno, msg);
@@ -108,10 +146,10 @@ operation       : declaration
 
 declaration     : datatype id_token                      {
                     Symbol symbol;
-                    symbol.name = strdup(yytext);
-                    symbol.type = datatype;
-                    symbol.scope = global;
-                    add_symbol(symbol_table, &symbol);
+                    strcpy(symbol.name, yytext);
+                    strcpy(symbol.type, datatype);
+                    symbol.scope = 0;
+                    add_symbol(symbol_table, symbol);
                 };
 
 assignment      : datatype id_token EQ_TOK expression    {parsed("Assignment statement");}

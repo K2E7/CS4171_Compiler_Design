@@ -1,43 +1,62 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_SYMBOLS 100
+
+// Structure to represent a symbol
 typedef struct {
-  char *name;
-  int type;
-  int scope;
+    char name[50];
+    char type[20];
+    int address;
 } Symbol;
 
-typedef struct {
-  Symbol *symbols;
-  int size;
-} SymbolTable;
+// Array to store symbols
+Symbol symbolTable[MAX_SYMBOLS];
+int symbolCount = 0;
 
-SymbolTable *create_symbol_table() {
-  SymbolTable *table = malloc(sizeof(SymbolTable));
-  table->symbols = NULL;
-  table->size = 0;
-  return table;
-}
-
-void destroy_symbol_table(SymbolTable *table) {
-  for (int i = 0; i < table->size; i++) {
-    free(table->symbols[i].name);
-  }
-  free(table->symbols);
-  free(table);
-}
-
-void add_symbol(SymbolTable *table, Symbol *symbol) {
-  table->symbols = realloc(table->symbols, sizeof(Symbol) * (table->size + 1));
-  table->symbols[table->size] = *symbol;
-  table->size++;
-}
-
-Symbol *lookup_symbol(SymbolTable *table, char *name) {
-  for (int i = 0; i < table->size; i++) {
-    if (strcmp(table->symbols[i].name, name) == 0) {
-      return &table->symbols[i];
+// Function to add a symbol to the symbol table
+void addSymbol(char name[], char type[], int address) {
+    if (symbolCount < MAX_SYMBOLS) {
+        strcpy(symbolTable[symbolCount].name, name);
+        strcpy(symbolTable[symbolCount].type, type);
+        symbolTable[symbolCount].address = address;
+        symbolCount++;
+    } else {
+        printf("Symbol table is full. Cannot add more symbols.\n");
     }
-  }
-  return NULL;
+}
+
+// Function to search for a symbol in the symbol table
+int searchSymbol(char name[]) {
+    for (int i = 0; i < symbolCount; i++) {
+        if (strcmp(symbolTable[i].name, name) == 0) {
+            return i;
+        }
+    }
+    return -1;  // Symbol not found
+}
+
+int main() {
+    // Adding symbols to the symbol table
+    addSymbol("x", "int", 100);
+    addSymbol("y", "float", 200);
+    addSymbol("z", "char", 300);
+
+    // Searching for a symbol
+    char searchName[50];
+    printf("Enter the symbol name to search: ");
+    scanf("%s", searchName);
+    int index = searchSymbol(searchName);
+
+    if (index != -1) {
+        printf("Symbol found:\n");
+        printf("Name: %s\n", symbolTable[index].name);
+        printf("Type: %s\n", symbolTable[index].type);
+        printf("Address: %d\n", symbolTable[index].address);
+    } else {
+        printf("Symbol not found in the symbol table.\n");
+    }
+
+    return 0;
 }
