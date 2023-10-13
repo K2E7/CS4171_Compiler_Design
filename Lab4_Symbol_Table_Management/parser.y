@@ -147,8 +147,7 @@ operation       : declaration
 declaration     : datatype id_token                      {
                     Symbol symbol;
                     strcpy(symbol.name, yytext);
-                    strcpy(symbol.type, datatype);
-                    symbol.scope = 0;
+                    set_datatype($1); // Set the current data type
                     add_symbol(symbol_table, symbol);
                 };
 
@@ -205,8 +204,7 @@ for_statement   : FOR_TOK LPAREN_TOK operation SEMICOLON_TOK operation SEMICOLON
 while_statement : WHILE_TOK LPAREN_TOK condition RPAREN_TOK block {parsed("While statement");}
                 ;
 
-condition       : expression relational_op expression
-                | expression
+condition       : expression
                 ;
 
 arithmetic_op   : PLUS_TOK
