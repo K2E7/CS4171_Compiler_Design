@@ -1,5 +1,5 @@
 all:
-	yacc -d -v parser.y 
+	yacc -d parser.y 
 	lex lexer.l
 	gcc y.tab.c -ll -o lexer
 

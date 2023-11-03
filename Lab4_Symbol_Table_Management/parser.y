@@ -1,48 +1,34 @@
 %{
+
 #include "lex.yy.c"
-#define MAX_SYMBOLS 100
+#include "hash.c"
+#include <stdbool.h>
+
 void yyerror(char *);
-
-// Symbol Table Definitions
-typedef struct {
-    char name[50];
-    char type[20];
-    int scope;  // You can define a scope as needed
-} Symbol;
-
-Symbol symbol_table[MAX_SYMBOLS];
-int symbol_count = 0;
-char current_datatype[20];                      // Global variable for storing current datatype.
-
-void set_datatype(char* datatype) {
-    strcpy(current_datatype, datatype);
-}
-
-char* get_datatype() {
-    return current_datatype;
-}
-
-void add_symbol(Symbol table[], Symbol symbol) {
-    if (symbol_count < MAX_SYMBOLS) {
-        strcpy(symbol.type, get_datatype()); // Use the current data type
-        table[symbol_count] = symbol;
-        symbol_count++;
-    } else {
-        yyerror("Symbol table is full.");
-    }
-}
-
-Symbol* lookup_symbol(Symbol table[], char *name) {
-    for (int i = 0; i < symbol_count; i++) {
-        if (strcmp(table[i].name, name) == 0) {
-            return &table[i];
-        }
-    }
-    return NULL;
-}
 
 void parsed(const char * msg) {
     printf("[line: %d] => %s syntax is OK\n", yylineno, msg);
+}
+
+int scope = 0;
+int dtype = 0;
+symbol_table *table;
+
+void add_variable(symbol_table *t, char *name, int dtype) {
+    symbol *var = create_symbol(name, dtype, scope, yylineno);
+    insert_table(t, var);
+}
+
+bool is_declared(symbol_table *t, char *name) {
+    symbol *var = lookup_table(t, name, scope);
+    if (var == NULL) {
+        return false;
+    }
+    return true;
+}
+
+void delete_variables(symbol_table *t) {
+    remove_table(t, scope);
 }
 
 %}
@@ -108,7 +94,6 @@ void parsed(const char * msg) {
 %start S
 
 %%
-
 S               : S statement
                 | S main
                 | S function
@@ -117,21 +102,29 @@ S               : S statement
                 | function
                 ;
 
-main            : datatype  MAIN_TOK LPAREN_TOK RPAREN_TOK block       {parsed("Main function");}
+open_paren      : LBRACE_TOK    { scope++; }
                 ;
 
-block           : LBRACE_TOK  statements  blocks  RBRACE_TOK
+close_paren     : RBRACE_TOK    { delete_variables(table); scope--; }
+                ;
+
+
+main            : datatype  MAIN_TOK LPAREN_TOK RPAREN_TOK block       {parsed("main function");}
+                ;
+
+
+block           : open_paren  statements  blocks  close_paren 
                 ;
 
 blocks          : block statements blocks
-                | // Required for an empty block
+                | // required for empty block
                 ;
 
 statements      : statements statement
                 | statements if_statement
                 | statements for_statement
                 | statements while_statement
-                | // Required for an empty statement
+                | // required for empty statement
                 ;
 
 statement       : operation SEMICOLON_TOK
@@ -145,37 +138,52 @@ operation       : declaration
                 ;
 
 declaration     : datatype id_token                      {
-                    Symbol symbol;
-                    strcpy(symbol.name, yytext);
-                    set_datatype($1); // Set the current data type
-                    add_symbol(symbol_table, symbol);
-                };
-
-assignment      : datatype id_token EQ_TOK expression    {parsed("Assignment statement");}
-                | id_token EQ_TOK expression              {parsed("Assignment statement");}
-                ;     
-
-return_statement: RETURN_TOK expression SEMICOLON_TOK    {parsed("Return statement");}
+    parsed("declaration statement");
+    add_variable(table, var_name, dtype);
+    iterate_table(table);
+}
                 ;
 
-function        : datatype id_token LPAREN_TOK params RPAREN_TOK block {parsed("Function");}
+assignment      : datatype id_token EQ_TOK expression    {
+    add_variable(table, var_name, dtype);
+    iterate_table(table);
+    parsed("assignment statement");
+}
+                | id_token EQ_TOK expression              {
+    if(!is_declared(table, var_name)) {
+        yyerror("variable not declared");
+        return 1;
+    } 
+    parsed("assignment statement");
+}
+                ;     
+
+return_statement: RETURN_TOK expression SEMICOLON_TOK    {parsed("return statement");}
+                ;
+
+function        : datatype id_token LPAREN_TOK params RPAREN_TOK block {parsed("function");}
                 ;
 
 params          : datatype id_token COMMA_TOK params
                 | datatype id_token     
-                | // Required for empty params
+                | // required for empty params
                 ;                
 
-function_call   : id_token LPAREN_TOK args RPAREN_TOK {parsed("Function call");}
+function_call   : id_token LPAREN_TOK args RPAREN_TOK {parsed("function call");}
                 ;
 
 args            : expression COMMA_TOK args
                 | expression
-                | // Required for empty args
+                | // required for empty args
                 ;           
 
 expression      : function_call
-                | id_token
+                | id_token                                                     {
+    if(!is_declared(table, var_name)) {
+        yyerror("variable not declared");
+        return 1;
+    }
+                }
                 | INTCONST
                 | FLOATCONST
                 | CHARCONST
@@ -185,26 +193,22 @@ expression      : function_call
                 | expression arithmetic_op expression
                 | expression relational_op expression
                 | expression PLUS_PLUS_TOK
-                | expression MINUS_MINUS_TOK {
-                     Symbol *symbol = lookup_symbol(symbol_table, yytext);
-                     if (symbol == NULL) {
-                     yyerror("Identifier not found.");
+                | expression MINUS_MINUS_TOK
+                ;  
 
-                    }
-                };  
-
-if_statement    : IF_TOK LPAREN_TOK condition RPAREN_TOK block                  {parsed("If statement");}
-                | IF_TOK LPAREN_TOK condition RPAREN_TOK block ELSE_TOK block   {parsed("If-else statement");}
-                | IF_TOK LPAREN_TOK condition RPAREN_TOK block ELSE_TOK if_statement {parsed("Else-if statement");}
+if_statement    : IF_TOK LPAREN_TOK condition RPAREN_TOK block                  {parsed("if statement");}
+                | IF_TOK LPAREN_TOK condition RPAREN_TOK block ELSE_TOK block   {parsed("if-else statement");}
+                | IF_TOK LPAREN_TOK condition RPAREN_TOK block ELSE_TOK if_statement {parsed("else-if statement");}
                 ;
 
-for_statement   : FOR_TOK LPAREN_TOK operation SEMICOLON_TOK operation SEMICOLON_TOK operation RPAREN_TOK block {parsed("For statement");}
+for_statement   : FOR_TOK LPAREN_TOK operation SEMICOLON_TOK operation SEMICOLON_TOK operation RPAREN_TOK block {parsed("for statement");}
                 ;
 
-while_statement : WHILE_TOK LPAREN_TOK condition RPAREN_TOK block {parsed("While statement");}
+while_statement : WHILE_TOK LPAREN_TOK condition RPAREN_TOK block {parsed("while statement");}
                 ;
 
-condition       : expression
+condition       : expression relational_op expression
+                | expression
                 ;
 
 arithmetic_op   : PLUS_TOK
@@ -227,10 +231,10 @@ relational_op   : LT_TOK
                 | EQ_EQ_TOK
                 ;
 
-datatype        : INT_TOK
-                | VOID_TOK
-                | CHAR_TOK
-                | FLOAT_TOK
+datatype        : INT_TOK       { dtype = INT_TOK; }
+                | VOID_TOK      { dtype = VOID_TOK; }
+                | CHAR_TOK      { dtype = CHAR_TOK; }
+                | FLOAT_TOK     { dtype = FLOAT_TOK; }
                 ;
 
 id_token        : id_token COMMA_TOK ID_TOK
@@ -244,6 +248,9 @@ void yyerror(char *s) {
 }
 
 int main() {
+
+    table = create_table();
+
     if (yyparse() == 0) {
         printf("\nParsing Completed Successfully ✓\n");
     } else {

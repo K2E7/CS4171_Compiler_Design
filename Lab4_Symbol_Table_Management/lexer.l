@@ -15,6 +15,7 @@ delimiter   [ \t]
 
     int in_comment = 0;
     int yylineno;
+    char var_name[20];
 %}
 
 %%
@@ -58,7 +59,6 @@ while           return (WHILE_TOK);
 for             return (FOR_TOK);
 if              return (IF_TOK);
 else            return (ELSE_TOK);
-void            return (VOID_TOK);
 int             return (INT_TOK);
 float           return (FLOAT_TOK);
 char            return (CHAR_TOK);
