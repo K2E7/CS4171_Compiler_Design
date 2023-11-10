@@ -64,7 +64,7 @@ float           return (FLOAT_TOK);
 char            return (CHAR_TOK);
 return          return (RETURN_TOK);
 
-{identifier}    return (ID_TOK);
+{identifier}    {strcpy(var_name, yytext); return (ID_TOK);}
 {intconst}      return (INTCONST);
 {floatconst}    return (FLOATCONST);
 {charconst}     return (CHARCONST);
