@@ -4,7 +4,6 @@ int main()
 {
     int a, b, s, d;
     a = b - 4 + (a + s);
-    
     while (3 + a)
     {
         b = b - 1;

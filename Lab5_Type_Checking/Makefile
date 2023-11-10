@@ -7,4 +7,4 @@ run:
 	./lexer < source.c
 
 clean:
-	rm -f lex.yy.c lexer y.tab.c y.tab.h y.output
+	rm -f lex.yy.c lexer y.tab.c y.tab.h y.output assembly_code.txt interm_code.txt
