@@ -10,6 +10,7 @@ int main() {
     float b = (a + 10.0) * 100;
     char c = 'a';
     c = 'b';
+    a = &b;
     if (a == 10) {
         printf("a is 10");
     } else if (a > 10) {
