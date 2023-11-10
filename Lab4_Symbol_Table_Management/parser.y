@@ -207,8 +207,7 @@ for_statement   : FOR_TOK LPAREN_TOK operation SEMICOLON_TOK operation SEMICOLON
 while_statement : WHILE_TOK LPAREN_TOK condition RPAREN_TOK block {parsed("while statement");}
                 ;
 
-condition       : expression relational_op expression
-                | expression
+condition       : expression
                 ;
 
 arithmetic_op   : PLUS_TOK
