@@ -5,10 +5,6 @@ int helloWorld() {
     return 0;
 }
 
-int add(int n, int m) {
-    return (n + m);
-}
-
 int main() {
     int a = 10;
     float b = (a + 10.0) * 100;
